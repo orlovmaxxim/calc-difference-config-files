@@ -1,0 +1,43 @@
+{
+  "name": "differ-calc-omxx",
+  "version": "0.0.1",
+  "description": "difference calculator",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel-node": "babel-node",
+    "build": "set NODE_ENV=production && babel src --out-dir dist --source-maps inline",
+    "eslint": "eslint",
+    "prepublishOnly": "npm run build"
+  },
+  "bin": {
+    "differ-calc": "dist/bin/differ-calc.js",
+    "gendiff": "dist/bin/gendiff.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orlovmaxxim/project-lvl2-s225.git"
+  },
+  "author": "Max Orlov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/orlovmaxxim/project-lvl2-s225/issues"
+  },
+  "homepage": "https://github.com/orlovmaxxim/project-lvl2-s225#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
+  },
+  "dependencies": {
+    "commander": "^2.15.0"
+  }
+}
