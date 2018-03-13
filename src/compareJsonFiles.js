@@ -17,6 +17,6 @@ export default (firstJson, secondJson) => {
     if (currentValue === changedValue) {
       return sum.concat(`   ${current} : ${currentValue}`);
     }
-    return sum.concat(`+ ${current} : ${currentValue} \n - ${current} : ${changedValue}`);
+    return sum.concat(`+ ${current} : ${currentValue}\n - ${current} : ${changedValue}`);
   }, []).join('\n ');
 };
