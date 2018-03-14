@@ -1,14 +1,22 @@
-import program from 'commander';
-import compareJsonFiles from './compareJsonFiles';
+import fs from 'fs';
+import _ from 'lodash';
 
-const prog = () => {
-  program
-    .version('0.0.1')
-    .arguments('<firstConfig> <secondConfig>')
-    .action((firstConfig, secondConfig) => console.log(compareJsonFiles(firstConfig, secondConfig)))
-    .description('Compares two configuration files and shows a difference.')
-    .option('-f, --format [type]', 'Output format')
-    .parse(process.argv);
+export default (firstJson, secondJson) => {
+  const currentFile = JSON.parse(fs.readFileSync(firstJson));
+  const changedFile = JSON.parse(fs.readFileSync(secondJson));
+  const sharedKeys = _.union(_.keys(currentFile), _.keys(changedFile));
+
+  return sharedKeys.reduce((sum, current) => {
+    const currentValue = currentFile[current];
+    const changedValue = changedFile[current];
+    if (!currentValue) {
+      return sum.concat(`+ ${current} : ${changedValue}`);
+    } else if (!changedValue) {
+      return sum.concat(`- ${current} : ${currentValue}`);
+    }
+    if (currentValue === changedValue) {
+      return sum.concat(`   ${current} : ${currentValue}`);
+    }
+    return sum.concat(`+ ${current} : ${currentValue}\n - ${current} : ${changedValue}`);
+  }, []).join('\n ');
 };
-
-export default prog;

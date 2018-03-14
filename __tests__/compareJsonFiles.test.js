@@ -1,5 +1,5 @@
 import fs from 'fs';
-import compareJsonFiles from '../src/compareJsonFiles';
+import compareJsonFiles from '../src';
 
 test('first test of compare JSON files', () => {
   const currentJsonFile = '__tests__/__fixtures__/files/firstJson.json';

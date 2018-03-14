@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-import prog from '../';
+import program from '../program';
 
-prog();
+program();
