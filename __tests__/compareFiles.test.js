@@ -13,3 +13,9 @@ test('second test of compare YAML files', () => {
   const correctTestAnswer = fs.readFileSync('__tests__/__fixtures__/files/testAnswer.txt').toString();
   return expect(compareJsonFiles(currentYamlFile, changedYamlFile)).toBe(correctTestAnswer);
 });
+test('third test of compare INI files', () => {
+  const currentIniFile = '__tests__/__fixtures__/files/firstIni.ini';
+  const changedIniFile = '__tests__/__fixtures__/files/secondIni.ini';
+  const correctTestAnswer = fs.readFileSync('__tests__/__fixtures__/files/testAnswer.txt').toString();
+  return expect(compareJsonFiles(currentIniFile, changedIniFile)).toBe(correctTestAnswer);
+});
