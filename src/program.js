@@ -1,11 +1,11 @@
 import program from 'commander';
-import compareJsonFiles from './';
+import compareFiles from './';
 
 export default () => {
   program
-    .version('0.0.2')
+    .version('0.0.3')
     .arguments('<firstConfig> <secondConfig>')
-    .action((firstConfig, secondConfig) => console.log(compareJsonFiles(firstConfig, secondConfig)))
+    .action((firstConfig, secondConfig) => console.log(compareFiles(firstConfig, secondConfig)))
     .description('Compares two configuration files and shows a difference.')
     .option('-f, --format [type]', 'Output format')
     .parse(process.argv);

@@ -1,9 +1,22 @@
 import fs from 'fs';
 import _ from 'lodash';
+import yaml from 'js-yaml';
+import path from 'path';
 
-export default (firstJson, secondJson) => {
-  const currentFile = JSON.parse(fs.readFileSync(firstJson));
-  const changedFile = JSON.parse(fs.readFileSync(secondJson));
+
+const mapping = {
+  '.yml': f => yaml.safeLoad(f),
+  '.json': f => JSON.parse(f),
+};
+
+const parseFileToObject = (file) => {
+  const expansion = path.extname(file).toLowerCase();
+  return mapping[expansion](fs.readFileSync(file));
+};
+
+export default (firstFile, secondFile) => {
+  const currentFile = parseFileToObject(firstFile);
+  const changedFile = parseFileToObject(secondFile);
   const sharedKeys = _.union(_.keys(currentFile), _.keys(changedFile));
 
   return sharedKeys.reduce((sum, current) => {
