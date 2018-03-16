@@ -19,3 +19,9 @@ test('third test of compare INI files', () => {
   const correctTestAnswer = fs.readFileSync('__tests__/__fixtures__/files/testAnswer.txt').toString();
   return expect(compareJsonFiles(currentIniFile, changedIniFile)).toBe(correctTestAnswer);
 });
+test('fourth test of compare JSON tree files', () => {
+  const currentJsonTree = '__tests__/__fixtures__/files/treeFirstJson.json';
+  const changedJsonTree = '__tests__/__fixtures__/files/treeSecondJson.json';
+  const correctTestAnswer = fs.readFileSync('__tests__/__fixtures__/files/testAnswerTree.txt').toString();
+  return expect(compareJsonFiles(currentJsonTree, changedJsonTree)).toBe(correctTestAnswer);
+});
