@@ -38,6 +38,6 @@ describe('my tests', () => {
     expect(compareFiles(firstIniTree, secondIniTree, 'main')).toBe(answerTree);
   });
   it('7 test of compare JSON plain', () => {
-    expect(compareFiles(firstJson, secondJson, 'flat')).toBe(answerFlat);
+    expect(compareFiles(firstJson, secondJson, 'plain')).toBe(answerFlat);
   });
 });
