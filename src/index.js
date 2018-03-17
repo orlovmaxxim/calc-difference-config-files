@@ -30,6 +30,6 @@ export default (firstFile, secondFile) => {
   const currentFile = parseFileToObject(firstFile);
   const changedFile = parseFileToObject(secondFile);
   const astTree = getAst(currentFile, changedFile);
-  // console.log(astTree);
+  console.log(astTree);
   return renderAst(astTree);
 };

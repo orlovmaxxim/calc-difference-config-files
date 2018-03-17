@@ -1,31 +1,47 @@
 import _ from 'lodash';
 
-const valueStatus = {
-  invested: (beforeValue, afterValue) => _.isObject(beforeValue) && _.isObject(afterValue),
-  notChange: (beforeValue, afterValue) => beforeValue === afterValue,
-  change: (beforeValue, afterValue) => beforeValue && afterValue,
-  added: (beforeValue, afterValue) => typeof (beforeValue) === 'undefined',
-  remote: (beforeValue, afterValue) => typeof (afterValue) === 'undefined',
-};
+const valueStatus = [
+  {
+    type: 'invested',
+    isThisType: (key, curFile, changedFile) => _.isObject(curFile[key]) && _.isObject(changedFile[key]),
+    action: (key, curFile, changedFile, f) => ({ children: f(curFile[key], changedFile[key]) }),
+  },
+  {
+    type: 'notChange',
+    isThisType: (key, curFile, changedFile) => curFile[key] === changedFile[key] && _.has(curFile, key) && _.has(changedFile, key),
+    action: (key, curFile, changedFile) => ({ current: curFile[key] }),
+  },
+  {
+    type: 'change',
+    isThisType: (key, curFile, changedFile) => curFile[key] !== changedFile[key] && _.has(curFile, key) && _.has(changedFile, key),
+    action: (key, curFile, changedFile) => ({ current: curFile[key], changed: changedFile[key] }),
+  },
+  {
+    type: 'added',
+    isThisType: (key, curFile, changedFile) => !_.has(curFile, key) && _.has(changedFile, key),
+    action: (key, curFile, changedFile) => ({ changed: changedFile[key] }),
+  },
+  {
+    type: 'remote',
+    isThisType: (key, curFile, changedFile) => _.has(curFile, key) && !_.has(changedFile, key),
+    action: (key, curFile, changedFile) => ({ current: curFile[key] }),
+  },
+];
+
 
 const getAst = (currentFile, changedFile) => {
   const sharedKeys = _.union(_.keys(currentFile), _.keys(changedFile));
 
   return sharedKeys.map((key) => {
-    const currentValue = currentFile[key];
-    const changedValue = changedFile[key];
-    const type = _.keys(valueStatus).find(o => valueStatus[o](currentValue, changedValue));
-    // console.log(type);
-    if (type !== 'invested') {
-      return {
-        typer: type,
-        name: key,
-        current: currentValue,
-        changed: changedValue,
-        children: [],
-      };
-    }
-    return { name: key, hasChild: true, children: getAst(currentValue, changedValue) };
+    const { type, action } = _.find(valueStatus, ({ isThisType }) => isThisType(key, currentFile, changedFile));
+    const { current, changed, children } = action(key, currentFile, changedFile, getAst);
+    return {
+      typer: type,
+      name: key,
+      current,
+      changed,
+      children,
+    };
   });
 };
 

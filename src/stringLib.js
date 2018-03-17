@@ -1,11 +1,11 @@
 import _ from 'lodash';
 
-const toStringifyObject = (obj) => {
-  if (_.isObject(obj)) {
-    const jsonObj = JSON.stringify(obj, null, '    ').replace(/"(.*)": "(.*)"/g, '$1: $2');
-    return jsonObj.replace(/\n/g, `\n${'  '.repeat(2)}`);
+const toStringifyObject = (value, level) => {
+  if (_.isObject(value)) {
+    const newValue = _.keys(value).map(key => `${'  '.repeat(level + 2)}  ${key}: ${value[key]}`).join('\n');
+    return `{\n${newValue}\n${'  '.repeat(level + 1)}}`;
   }
-  return obj.toString();
+  return value;
 };
 
 export default toStringifyObject;
