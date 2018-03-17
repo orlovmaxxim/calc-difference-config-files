@@ -9,9 +9,7 @@ const mappingValue = {
 
 const mappingTyper = {
   invested: (node, filepath, f) => f(node.children, filepath),
-  notChange: () => {
-    return ' ';
-  },
+  notChange: () => ' ',
   change: (node, filepath) => {
     const current = mappingValue[typeof node.current](node.current);
     const changed = mappingValue[typeof node.changed](node.changed);
