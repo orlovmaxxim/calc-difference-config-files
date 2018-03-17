@@ -3,7 +3,7 @@ import renderFlatFormat from './renderFlatFormat';
 
 const mappingRenderers = {
   main: renderAst,
-  flat: renderFlatFormat,
+  plain: renderFlatFormat,
 };
 
 export default format => mappingRenderers[format];
