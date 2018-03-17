@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import toStringifyObject from './stringLib';
+import toStringifyObject from '../stringLib';
 
 const mappingTyper = {
   invested: (node, level, f) => `${'  '.repeat(level)}  ${node.name}: {\n${f(node.children, level + 2)}\n${'  '.repeat(level + 1)}}`,
