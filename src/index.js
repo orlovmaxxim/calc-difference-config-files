@@ -3,6 +3,7 @@
 
 import getAst from './getAst';
 import renderAst from './renderAst';
+import renderFlatFormat from './renderers/renderFlatFormat';
 import parseFileToObject from './parser';
 
 // export default (firstFile, secondFile) => {
@@ -30,6 +31,6 @@ export default (firstFile, secondFile) => {
   const currentFile = parseFileToObject(firstFile);
   const changedFile = parseFileToObject(secondFile);
   const astTree = getAst(currentFile, changedFile);
-  console.log(astTree);
-  return renderAst(astTree);
+  // return renderAst(astTree);
+  return renderFlatFormat(astTree);
 };
