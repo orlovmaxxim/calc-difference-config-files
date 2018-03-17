@@ -1,6 +1,13 @@
 import _ from 'lodash';
 
-const toStringifyObject = (value, level) => {
+const mappingValue = {
+  object: () => 'complex value',
+  boolean: value => `${value}`,
+  string: value => `'${value}'`,
+  number: value => `${value}`,
+};
+
+export const toStringifyObject = (value, level) => {
   if (_.isObject(value)) {
     const newValue = _.keys(value).map(key => `${'  '.repeat(level + 2)}  ${key}: ${value[key]}`).join('\n');
     return `{\n${newValue}\n${'  '.repeat(level + 1)}}`;
@@ -8,4 +15,6 @@ const toStringifyObject = (value, level) => {
   return value;
 };
 
-export default toStringifyObject;
+export const stringify = value => mappingValue[typeof value](value);
+
+// export default toStringifyObject;

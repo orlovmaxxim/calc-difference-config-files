@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import toStringifyObject from '../stringLib';
+import { toStringifyObject } from '../stringLib';
 
 const mappingTyper = {
   invested: (node, level, f) => `${'  '.repeat(level)}  ${node.name}: {\n${f(node.children, level + 2)}\n${'  '.repeat(level + 1)}}`,
@@ -11,7 +10,7 @@ const mappingTyper = {
 
 const renderAst = (astTree) => {
   const iterator = (acc, deepLevel) =>
-    _.flatten(acc.map(node => mappingTyper[node.typer](node, deepLevel, iterator))).join('\n');
+    acc.map(node => mappingTyper[node.typer](node, deepLevel, iterator)).join('\n');
   return `{\n${iterator(astTree, 1)}\n}`;
 };
 
