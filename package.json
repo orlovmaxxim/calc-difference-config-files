@@ -1,6 +1,6 @@
 {
   "name": "differ-calc-omxx",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "difference calculator",
   "main": "dist/index.js",
   "files": [
