@@ -3,7 +3,7 @@ import compareFiles from './';
 
 export default () => {
   program
-    .version('0.0.9')
+    .version('0.1.0')
     .arguments('<firstConfig> <secondConfig>')
     .action((firstConfig, secondConfig, option) =>
       console.log(compareFiles(firstConfig, secondConfig, option.format)))
