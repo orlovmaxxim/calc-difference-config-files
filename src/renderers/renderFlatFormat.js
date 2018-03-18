@@ -3,8 +3,8 @@ import { stringify } from '../stringLib';
 const mappingTyper = {
   invested: (node, filepath, f) => f(node.children, filepath),
   notChange: () => ' ',
-  change: (node, filepath) => `Property '${filepath}' was updated. From ${stringify(node.current)} to ${stringify(node.changed)}`,
-  added: (node, filepath) => `Property '${filepath}' was added with value: ${stringify(node.changed)}`,
+  change: (node, filepath) => `Property '${filepath}' was updated. From ${stringify(node.oldValue)} to ${stringify(node.newValue)}`,
+  added: (node, filepath) => `Property '${filepath}' was added with value: ${stringify(node.newValue)}`,
   remote: (node, filepath) => `Property '${filepath}' was removed`,
 };
 

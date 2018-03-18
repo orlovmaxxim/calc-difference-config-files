@@ -10,8 +10,8 @@ const parseFileToObject = (filepath) => {
 };
 
 export default (firstFile, secondFile, format = 'main') => {
-  const currentFile = parseFileToObject(firstFile);
-  const changedFile = parseFileToObject(secondFile);
-  const astTree = getAst(currentFile, changedFile);
+  const oldFile = parseFileToObject(firstFile);
+  const newFile = parseFileToObject(secondFile);
+  const astTree = getAst(oldFile, newFile);
   return render(format)(astTree);
 };

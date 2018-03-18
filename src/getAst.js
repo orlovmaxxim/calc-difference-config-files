@@ -3,47 +3,47 @@ import _ from 'lodash';
 const valueStatus = [
   {
     type: 'invested',
-    isThisType: (key, curFile, changedFile) =>
-      _.isObject(curFile[key]) && _.isObject(changedFile[key]),
-    action: (key, curFile, changedFile, f) => ({ children: f(curFile[key], changedFile[key]) }),
+    isThisType: (key, oldFile, newFile) =>
+      _.isObject(oldFile[key]) && _.isObject(newFile[key]),
+    action: (key, oldFile, newFile, f) => ({ children: f(oldFile[key], newFile[key]) }),
   },
   {
     type: 'notChange',
-    isThisType: (key, curFile, changedFile) =>
-      curFile[key] === changedFile[key] && _.has(curFile, key) && _.has(changedFile, key),
-    action: (key, curFile) => ({ current: curFile[key] }),
+    isThisType: (key, oldFile, newFile) =>
+      oldFile[key] === newFile[key] && _.has(oldFile, key) && _.has(newFile, key),
+    action: (key, oldFile) => ({ oldValue: oldFile[key] }),
   },
   {
     type: 'change',
-    isThisType: (key, curFile, changedFile) =>
-      curFile[key] !== changedFile[key] && _.has(curFile, key) && _.has(changedFile, key),
-    action: (key, curFile, changedFile) => ({ current: curFile[key], changed: changedFile[key] }),
+    isThisType: (key, oldFile, newFile) =>
+      oldFile[key] !== newFile[key] && _.has(oldFile, key) && _.has(newFile, key),
+    action: (key, oldFile, newFile) => ({ oldValue: oldFile[key], newValue: newFile[key] }),
   },
   {
     type: 'added',
-    isThisType: (key, curFile, changedFile) => !_.has(curFile, key) && _.has(changedFile, key),
-    action: (key, curFile, changedFile) => ({ changed: changedFile[key] }),
+    isThisType: (key, oldFile, newFile) => !_.has(oldFile, key) && _.has(newFile, key),
+    action: (key, oldFile, newFile) => ({ newValue: newFile[key] }),
   },
   {
     type: 'remote',
-    isThisType: (key, curFile, changedFile) => _.has(curFile, key) && !_.has(changedFile, key),
-    action: (key, curFile) => ({ current: curFile[key] }),
+    isThisType: (key, oldFile, newFile) => _.has(oldFile, key) && !_.has(newFile, key),
+    action: (key, oldFile) => ({ oldValue: oldFile[key] }),
   },
 ];
 
 
-const getAst = (currentFile, changedFile) => {
-  const sharedKeys = _.union(_.keys(currentFile), _.keys(changedFile));
+const getAst = (oldFile, newFile) => {
+  const sharedKeys = _.union(_.keys(oldFile), _.keys(newFile));
 
   return sharedKeys.map((key) => {
     const { type, action } = _.find(valueStatus, ({ isThisType }) =>
-      isThisType(key, currentFile, changedFile));
-    const { current, changed, children } = action(key, currentFile, changedFile, getAst);
+      isThisType(key, oldFile, newFile));
+    const { oldValue, newValue, children } = action(key, oldFile, newFile, getAst);
     return {
       typer: type,
       name: key,
-      current,
-      changed,
+      oldValue,
+      newValue,
       children,
     };
   });

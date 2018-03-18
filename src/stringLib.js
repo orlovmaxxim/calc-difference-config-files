@@ -16,5 +16,3 @@ export const toStringifyObject = (value, level) => {
 };
 
 export const stringify = value => mappingValue[typeof value](value);
-
-// export default toStringifyObject;

@@ -7,4 +7,4 @@ const mapping = {
   '.ini': ini.decode,
 };
 
-export default (exp, file) => mapping[exp](file);
+export default (exp, content) => mapping[exp](content);
